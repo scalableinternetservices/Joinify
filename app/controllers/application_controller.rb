@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   #
   def greeting
   	render html: "Welcome to Joinify"
+  end
 end
