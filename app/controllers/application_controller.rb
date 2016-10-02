@@ -1,8 +1,3 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+class ApplicationController < ActionController::API
 
-  #
-  def greeting
-  	render html: "Welcome to Joinify"
-  end
 end
