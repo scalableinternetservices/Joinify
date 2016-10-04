@@ -16,3 +16,8 @@ Team Members:
 Bjarte Sjursen ([@bsjurs1](https://github.com/bsjurs1))  
 ![Bjarte photo](https://avatars1.githubusercontent.com/u/9829147?v=3&u=2b305b509226477839eaec45c372c82183e268bc&s=140)
 
+Kristoffer Andersen ([@krisaand](https://github.com/krisaand))
+
+![Kristoffer photo](https://avatars2.githubusercontent.com/u/22510699?v=3&u=03f2ee1a925c4c4361f9aa2cb3ad099bff96778b&s=140)
+
+
