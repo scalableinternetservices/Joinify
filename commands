@@ -1,0 +1,31 @@
+
+#Smart commands for terminal
+
+//Git commands
+	
+	- git pull #Incorporates changes from a remote repository into the current branch
+	- git status #List the files you've changed and those you still need to add or commit:
+	- git commit -m "Commit changes to head (but not yet to the remote repository):"
+	- git merge <branchname>
+
+	ADD
+		- git add <filename> #adds current file so it is ready for commit
+		- git add . # looks at the working tree and adds all those paths to the staged changes if they are either changed or are new and not ignored
+
+	Branch
+		Local	
+			- git branch #lists all branches in local repo
+			- git branch <branchname> #creates new branch with name: "branch-name"
+			- git checkout <branchname> #change from current branch to branch-name
+			- git checkout -b <branchname> #creates a branch called branch-name and checks out to it
+			- git branch -d <branchname> #Delete the feature branch:
+
+		Remote
+			- git push origin <branchname> #Push the branch to your remote repository, so others can use it:
+			- git push origin :<branchname> #Delete a branch on your remote repository:
+			- git push --all origin #Push all branches to your remote repository:
+	 
+	
+
+
+	
