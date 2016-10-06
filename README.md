@@ -9,6 +9,7 @@ Maybe there is a local food market. Maybe there is a local soccer game. Maybe th
 This project is aimed at developing a solution to this problem. 
 The platform will utilize existing web-technologies to make a highly scalable system that enables users to create and discover events in the local area.
 
+Follow the progress of the team on trello: https://trello.com/b/4I9Ytspy/backlog
 
 Project Name: Joinify
 
