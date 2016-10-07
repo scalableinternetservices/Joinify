@@ -22,7 +22,8 @@
 
 		Remote
 			- git push origin <branchname> #Push the branch to your remote repository, so others can use it:
-			- git push origin :<branchname> #Delete a branch on your remote repository:
+			- git push origin :<branchname> #Delete a branch on your remote repository
+			- git push origin --delete <branchname> #Delete a branch on your remote repository (easier to remember)
 			- git push --all origin #Push all branches to your remote repository:
 	 
 	
