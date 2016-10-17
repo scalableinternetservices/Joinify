@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
-  resources :events
-  root 'greetings#hello_world'
+  
+	root 'greetings#hello_world'
+	
+
+
+	resources :events
+
+
 end
