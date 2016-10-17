@@ -8,10 +8,10 @@ one:
   bio: MyText
   picture: MyString
 
-two:
-  username: MyString
-  email: MyString
-  age: 1
-  sex: MyString
-  bio: MyText
-  picture: MyString
+# two:
+#   username: MyString
+#   email: MyString
+#   age: 1
+#   sex: MyString
+#   bio: MyText
+#   picture: MyString
