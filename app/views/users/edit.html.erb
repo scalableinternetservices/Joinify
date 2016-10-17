@@ -1,0 +1,7 @@
+<h1 class="heading">Editing User</h1>
+
+<%= render 'form', user: @user %>
+<div class="action-buttons">
+  <%= link_to 'Show', @user, {:class => "btn btn-default"} %> |
+  <%= link_to 'Back', users_path, {:class => "btn btn-default"} %>
+</div>
