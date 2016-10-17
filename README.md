@@ -25,4 +25,4 @@ Oliver Damsgaard Jensen ([@oliverDJ](https://github.com/oliverDJ))
 
 Jonathan Easterman ([@EasterAndJay](https://github.com/EasterAndJay))
 
-
+<img src="https://s3.amazonaws.com/jeasterman-personal-images/me_on_boat.jpg" width="150px"/>
