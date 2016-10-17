@@ -5,6 +5,7 @@ class UserTest < ActiveSupport::TestCase
   def setup
     @user = User.new(username: "Example Guy", email: "user@example.com")
   end
+
   test "user username should exist" do
     user = User.new
     assert_not user.valid?
