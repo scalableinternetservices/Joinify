@@ -1,3 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "users/users";
+
+body {
+  font-family: 'Roboto';
+}
+
+.heading {
+  text-align: center;
+}
+
+.actions {
+  padding-top: 20px;
+  width: 50%;
+  margin: 0 auto;
+}
