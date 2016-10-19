@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
   def setup
     @user = setup_user
   end
-  
+
   test "user username should exist" do
     user = User.new
     assert_not user.valid?
