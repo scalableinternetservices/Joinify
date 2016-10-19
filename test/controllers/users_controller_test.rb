@@ -3,35 +3,33 @@ require 'securerandom'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @user = setup_user
   end
 
-  # test "should get index" do
-  #   get users_url
-  #   assert_response :success
-  # end
+  test "should redirect get index when not logged in" do
+    get users_url
+    assert_response :redirect
+  end
 
-  # test "should get new" do
-  #   get new_user_url
-  #   assert_response :success
-  # end
+  test "should redirect get new when not logged in" do
+    get new_user_url
+    assert_response :redirect
+  end
 
   # test "should create user" do
   #   assert_difference('User.count') do
-  #     post users_url, params: 
+  #     post registration_path(:user), params: 
   #     { 
   #       user: { 
-  #         age: @user.age,
-  #         bio: @user.bio,
-  #         email: SecureRandom.hex(4) + "@example.com",
-  #         picture: @user.picture,
-  #         sex: "M",
-  #         username: SecureRandom.hex(4)
+  #         email: @user.email,
+  #         username: @user.username,
+  #         password: @user.password,
+  #         password_confirmation: @user.password
   #       }
   #     }
   #   end
 
-  #   assert_redirected_to user_url(User.last)
+  #   assert_redirected_to root
   # end
 
   # test "should show user" do

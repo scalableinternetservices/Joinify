@@ -3,8 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_and_belongs_to_many :invited_events, class_name: "Event"
-  has_and_belongs_to_many :accepted_events, class_name: "Event"
+  has_and_belongs_to_many :invited_events, class_name: "Event", :join_table => :invited
+  has_and_belongs_to_many :accepted_events, class_name: "Event", :join_table => :attending
   has_many :created_events, class_name: "Event"
 
   before_save { self.email = email.downcase }
