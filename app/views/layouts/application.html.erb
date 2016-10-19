@@ -12,20 +12,24 @@
   <![endif]-->
 </head>
 <body>
+
   <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-      <%= link_to "Joinify", 'users_controller#home', id: "logo" %>
+      <%= link_to "Joinify", 'events#index', id: "logo" %>
       <nav>
         <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "Home",   '#' %></li>
-          <li><%= link_to "Help",   '#' %></li>
+          <li><%= link_to "Users",   'users#index' %></li>
+          <li><%= link_to "Events",   'events#index' %></li>
           <li><%= link_to "Log in", '#' %></li>
         </ul>
       </nav>
     </div>
   </header>
-<div class="container">
-  <%= yield %>
-</div>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+<footer>
+</footer>
 </body>
 </html>
