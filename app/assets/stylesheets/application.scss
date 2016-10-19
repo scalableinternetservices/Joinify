@@ -1,3 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "users/users";
+
+body {
+  padding-top: 65px;
+}
