@@ -8,6 +8,7 @@ one:
   description: MyString
   is_public: false
   media_path: MyString
+  owner_id: 1
 
 two:
   title: MyString
@@ -17,3 +18,4 @@ two:
   description: MyString
   is_public: false
   media_path: MyString
+  owner_id: 1
