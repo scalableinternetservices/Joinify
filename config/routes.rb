@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-
+  devise_for :users
 	root 'events#index'
 	resources :events
-  	
-  	#Users
-  	resources :users
-  	devise_for :users
+	resources :users
+  put '/invite', to: 'events#invite'
 end
