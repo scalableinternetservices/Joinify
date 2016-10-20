@@ -1,6 +1,9 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :invite]
-
+  # after_filter :discard_flash, only: :invite
+  def discard_flash
+    flash.discard if request.xhr? 
+  end
   # GET /events
   # GET /events.json
   def index
@@ -78,18 +81,25 @@ class EventsController < ApplicationController
   end
 
   def invite
-    @user = User.find_by_username(invite_params[:invite_username])
-    if @user
-      if(@event.is_public || @event.owner_id == current_user.id)
-        @event.invitees << @user
-        flash[:notice] = "You invited #{@user.username} to your event!"
-      else
-        flash[:alert] = "You can't invite users to this event!"
-      end
-    else
-      flash[:alert] = "That user does not exist!"
+    @user = User.find_by_username(event_params[:invitees])
+    respond_to do |format|
+      format.js {
+        if @user
+          if(@event.is_public || @event.owner_id == current_user.id)
+            if(@event.invitees.map(&:id).include?(@user.id))
+              flash[:notice] = "#{@user.username} is already invited to this event!"
+            else
+              @event.invitees << @user
+              flash[:notice] = "You invited #{@user.username} to your event!"
+            end
+          else
+            flash[:alert] = "You can't invite users to this event!"
+          end
+        else
+          flash[:alert] = "That user does not exist!"
+        end
+      }
     end
-    head
   end
 
   private
@@ -100,10 +110,10 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :latitude, :longitude, :start_date, :description, :is_public, :media_path)
+      params.require(:event).permit(:title, :latitude, :longitude, :start_date, :description, :is_public, :media_path, :invitees)
     end
 
     def invite_params
-      params.permit(:invite_username, :id)
+      params.permit(:invite_username)
     end
 end
