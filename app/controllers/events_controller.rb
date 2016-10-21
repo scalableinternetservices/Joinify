@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :invite]
 
   # GET /events
   # GET /events.json
@@ -77,6 +77,21 @@ class EventsController < ApplicationController
     end
   end
 
+  def invite
+    @user = User.find_by_username(invite_params[:invite_username])
+    if @user
+      if(@event.is_public || @event.owner_id == current_user.id)
+        @event.invitees << @user
+        flash[:notice] = "You invited #{@user.username} to your event!"
+      else
+        flash[:alert] = "You can't invite users to this event!"
+      end
+    else
+      flash[:alert] = "That user does not exist!"
+    end
+    head
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
@@ -86,5 +101,9 @@ class EventsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:title, :latitude, :longitude, :start_date, :description, :is_public, :media_path)
+    end
+
+    def invite_params
+      params.permit(:invite_username, :id)
     end
 end

@@ -35,5 +35,12 @@
   <%= @event.media_path %>
 </p>
 
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Invite user by username">
+  <span class="input-group-btn">
+    <%= link_to "Invite!", invite_path, class: 'btn btn-default', method: :put, remote: true %>
+  </span>
+</div>
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
