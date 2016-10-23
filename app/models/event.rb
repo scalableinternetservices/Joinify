@@ -10,6 +10,8 @@ class Event < ApplicationRecord
   validate :validate_future
   validate :validate_decription_length
 
+  private
+
   def validate_title_length
   	if title.length > 50
   		errors.add(:title, "The title can't be more than 50 characters long")
@@ -26,7 +28,6 @@ class Event < ApplicationRecord
     if description.length > 255
       errors.add(:description, "The description can't be more than 255 characters long")
     end
-
   end
 
 end
