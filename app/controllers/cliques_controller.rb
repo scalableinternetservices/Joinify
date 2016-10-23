@@ -24,7 +24,7 @@ class CliquesController < ApplicationController
   # POST /cliques
   # POST /cliques.json
   def create
-    @clique = Clique.new(clique_params)
+    @clique = Clique.new(clique_params.merge!(creator_id: current_user.id))
 
     respond_to do |format|
       if @clique.save
@@ -69,6 +69,6 @@ class CliquesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def clique_params
-      params.require(:clique).permit(:name, :creator_id)
+      params.require(:clique).permit(:name)
     end
 end
