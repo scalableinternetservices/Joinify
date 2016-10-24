@@ -9,9 +9,15 @@ class CommentsController < ApplicationController
   end
 
   def create
-
-    # @event = this event
-    render "events/show"
+    @event = Event.find_by_id(params[:id])
+    @comment = Comment.new(
+        :message => params[:comment][:message],
+        :creator_id => current_user.id,
+        :event_id => @event.id
+    )
+    @comment.save
+    @comments = @event.comments
+    render "events/show" and return
   end
 
   def destroy

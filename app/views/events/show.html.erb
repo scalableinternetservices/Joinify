@@ -42,14 +42,8 @@
   </span>
 <% end %>
 
-<tbody>
-  <%= @comments.each do |comment|  %>
-    <tr>
-      <td>comment.message</td>
-      <td>comment.creator_id</td>
-    </tr>
-  <% end -%>
-</tbody>
+<h3 class="text-center">Comments</h3>
+<%= render @comments %>
 
 <%= render 'comments/form', comment: Comment.new, event_id: @event.id %>
 

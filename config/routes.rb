@@ -17,5 +17,5 @@ Rails.application.routes.draw do
 	resources :events
   resources :users
   put '/invite/:id', to: 'events#invite'
-  post "/events/:id/comments", to: "comments#create"
+  post "/events/:id", to: "comments#create"
 end
