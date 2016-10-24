@@ -42,5 +42,16 @@
   </span>
 <% end %>
 
+<tbody>
+  <%= @comments.each do |comment|  %>
+    <tr>
+      <td>comment.message</td>
+      <td>comment.creator_id</td>
+    </tr>
+  <% end -%>
+</tbody>
+
+<%= render 'comments/form', comment: Comment.new, event_id: @event.id %>
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

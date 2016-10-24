@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :invited_events, class_name: "Event", :join_table => :invited
   has_and_belongs_to_many :accepted_events, class_name: "Event", :join_table => :attending
   has_many :created_events, class_name: "Event"
+  has_many :comments, class_name: "Comment"
 
   before_save { self.email = email.downcase }
   validates :username, presence: true, length: { in: 5..20, message: "Username must be between 5 and 20 characters long"}
