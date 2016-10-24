@@ -13,6 +13,7 @@ gem 'pg', '0.18.4'
 gem 'devise'
 gem 'google-webfonts-rails'
 gem 'paperclip', "~> 5.0.0"
+gem 'aws-sdk'
 
 group :development, :test do
   gem 'byebug',  '9.0.0', platform: :mri
