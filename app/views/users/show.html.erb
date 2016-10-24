@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= image_tag @user.picture.url %>
+
 <p>
   <strong>Username:</strong>
   <%= @user.username %>
@@ -23,11 +25,6 @@
 <p>
   <strong>Bio:</strong>
   <%= @user.bio %>
-</p>
-
-<p>
-  <strong>Picture:</strong>
-  <%= @user.picture %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

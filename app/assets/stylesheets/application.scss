@@ -1,9 +1,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "users/users";
+@import "events";
+@import "nav";
 
 body {
   padding-top: 65px;
+  font-family: 'Roboto';
 }
 
 table, th, td {
@@ -13,7 +16,20 @@ table, th, td {
 
 th, td {
   padding: 15px;
-  font-family: 'Roboto';
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #9d9d9d;
+  text-decoration: none;
+  font-size: 25px;
+  padding: 18px;
+  &:hover {
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .heading {
