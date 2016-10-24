@@ -4,8 +4,10 @@ class Event < ApplicationRecord
   has_and_belongs_to_many :attendees, class_name: "User", :join_table => :attending
   belongs_to :owner, class_name: "User"
 
-  has_many :comments, class_name: "Comment"
 
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "metallica.jpg"
+  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
+  has_many :comments, class_name: "Comment"
 
   validates :title, presence: true
   validate :validate_title_length
