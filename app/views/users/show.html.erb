@@ -28,7 +28,7 @@
 <p>Event Invites: </p>
 <% @user.invited_events.each do |event| %>
   <%= form_for(@user, :method => "put", :url => "/accept/#{@user.id}") do |f| %>
-    <%= event.title %>
+    <%= link_to "#{event.title}", event  %>
     <%= hidden_field :event, :id, :value => event.id %>
     <%= f.submit "Accept Invite", :class=> "btn btn-primary" %>
   <% end %>
