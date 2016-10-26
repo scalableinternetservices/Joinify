@@ -65,8 +65,13 @@ class UsersController < ApplicationController
 
   def accept
     @event = Event.find_by_id(params[:event][:id])
-    @user.invited_events.delete(@event)
-    @user.accepted_events << @event
+    if(!@user.accepted_events.map(&:id).include?(@event.id))
+      @user.invited_events.delete(@event)
+      @user.accepted_events << @event
+      flash[:notice] = "You are now attending #{@event.title}!"
+    else
+      flash[:alert] = "You are already attending #{@event.title}!"
+    end
     render "show"
   end
 

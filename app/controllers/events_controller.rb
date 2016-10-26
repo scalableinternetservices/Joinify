@@ -1,9 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :invite]
-  # after_filter :discard_flash, only: :invite
-  def discard_flash
-    flash.discard if request.xhr? 
-  end
+
   # GET /events
   # GET /events.json
   def index
@@ -89,6 +86,8 @@ class EventsController < ApplicationController
           if(@event.is_public || @event.owner_id == current_user.id)
             if(@event.invitees.map(&:id).include?(@user.id))
               flash[:notice] = "#{@user.username} is already invited to this event!"
+            elsif(@event.attendees.map(&:id).include?(@user.id))
+              flash[:notice] = "#{@user.username} is already attending this event!"
             else
               @event.invitees << @user
               flash[:notice] = "You invited #{@user.username} to your event!"
