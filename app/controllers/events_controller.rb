@@ -7,7 +7,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    events = Event.all
+    @events = events.sort {|a,b| b.attendees.count <=> a.attendees.count}
   end
 
   # GET /events/1
