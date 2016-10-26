@@ -2,11 +2,18 @@
   background-color: #0D47A1;
 
   li {
-    &:hover {
-      background-color: none;
+    a {
+      color: #EEEEEE;
     }
-  }
-  a {
-    color: #EEEEEE;
+    
+    a:hover {
+      background-color: transparent;
+    }
+
+    a:active {
+      font-size: 20px;
+      font-weight: 500;
+    }
+    
   }
 }

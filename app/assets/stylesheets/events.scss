@@ -8,6 +8,7 @@
   position: relative;
   width: 100%;
   background-color: #2196F3;
+  border: none;
 
   border-radius: 30px;
   -webkit-box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.15);
@@ -44,6 +45,15 @@
     bottom: 0;
     right: 0;
     padding: 10px;
+    * {
+      margin: 0px 5px;
+    }
+    a.btn {
+      &.btn-primary,&.btn-default {
+        background-color: #3CBFE6;
+        border: none;
+      }
+    }
   }
 
 }
