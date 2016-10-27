@@ -5,12 +5,12 @@
 <table>
   <thead>
     <tr>
+      <th>Picture</th>
       <th>Username</th>
       <th>Email</th>
       <th>Age</th>
       <th>Sex</th>
       <th>Bio</th>
-      <th>Picture</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,12 +18,13 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
+        
+        <td><%= image_tag user.picture.url %></td>
         <td><%= user.username %></td>
         <td><%= user.email %></td>
         <td><%= user.age %></td>
         <td><%= user.sex %></td>
         <td><%= user.bio %></td>
-        <td><%= user.picture %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -33,5 +34,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New User', new_user_path %>

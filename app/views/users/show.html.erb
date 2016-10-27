@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= image_tag @user.picture.url %>
 
 <p>
   <strong>Username:</strong>
@@ -25,10 +25,28 @@
   <%= @user.bio %>
 </p>
 
-<p>
-  <strong>Picture:</strong>
-  <%= @user.picture %>
-</p>
+<p>Event Invites: </p>
+<% @user.invited_events.each do |event| %>
+  <%= form_for(@user, :method => "put", :url => "/accept/#{@user.id}") do |f| %>
+    <%= link_to "#{event.title}", event  %>
+    <%= hidden_field :event, :id, :value => event.id %>
+    <%= f.submit "Accept Invite", :class=> "btn btn-primary" %>
+  <% end %>
+<% end %>
+
+<p>Upcoming Events: </p>
+<% @user.accepted_events.each do |event| %>
+  <% if event.start_date > Time.now %>
+    <%= link_to "#{event.title}", event %>
+  <% end %>
+<% end %>
+
+<p>Past Events: </p>
+<% @user.accepted_events.each do |event| %>
+  <% if event.start_date < Time.now %>
+    <%= link_to "#{event.title}", event %>
+  <% end %>
+<% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

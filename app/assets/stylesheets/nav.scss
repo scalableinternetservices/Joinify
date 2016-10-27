@@ -1,0 +1,19 @@
+.joinify-nav {
+  background-color: #0D47A1;
+
+  li {
+    a {
+      color: #EEEEEE;
+    }
+    
+    a:hover {
+      background-color: transparent;
+    }
+
+    a:active {
+      font-size: 20px;
+      font-weight: 500;
+    }
+    
+  }
+}

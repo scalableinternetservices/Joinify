@@ -1,15 +1,17 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :invite]
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    events = Event.where(:is_public => true).to_a + current_user.invited_events + current_user.accepted_events || current_user.created_events.to_a
+    @events = events.sort {|a,b| b.attendees.count <=> a.attendees.count}
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
+    @comments = @event.comments
   end
 
   # GET /events/new
@@ -77,6 +79,30 @@ class EventsController < ApplicationController
     end
   end
 
+  def invite
+    @user = User.find_by_username(event_params[:invitees])
+    respond_to do |format|
+      format.js {
+        if @user
+          if(@event.is_public || @event.owner_id == current_user.id)
+            if(@event.invitees.map(&:id).include?(@user.id))
+              flash[:notice] = "#{@user.username} is already invited to this event!"
+            elsif(@event.attendees.map(&:id).include?(@user.id))
+              flash[:notice] = "#{@user.username} is already attending this event!"
+            else
+              @event.invitees << @user
+              flash[:notice] = "You invited #{@user.username} to your event!"
+            end
+          else
+            flash[:alert] = "You can't invite users to this event!"
+          end
+        else
+          flash[:alert] = "That user does not exist!"
+        end
+      }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
@@ -85,6 +111,10 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :latitude, :longitude, :start_date, :description, :is_public, :media_path)
+      params.require(:event).permit(:title, :latitude, :longitude, :start_date, :description, :is_public, :media_path, :invitees, :picture)
+    end
+
+    def invite_params
+      params.permit(:invite_username)
     end
 end

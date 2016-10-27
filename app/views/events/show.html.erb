@@ -4,7 +4,7 @@
   <strong>Title:</strong>
   <%= @event.title %>
 </p>
-
+<%= image_tag @event.picture.url %>
 <p>
   <strong>Latitude:</strong>
   <%= @event.latitude %>
@@ -34,6 +34,18 @@
   <strong>Media path:</strong>
   <%= @event.media_path %>
 </p>
+
+<%= form_for(@event, remote: true, :method => "put", :url => "/invite/#{@event.id}", :class => "input-group") do |f| %>
+  <%= f.text_field :invitees, :class => "form-control", :placeholder => "Invite user by username", :value => "" %>
+  <span class="input-group-btn">
+    <%= f.submit :class => "btn btn-primary" %>
+  </span>
+<% end %>
+
+<h3 class="text-center">Comments</h3>
+<%= render @comments %>
+
+<%= render 'comments/form', comment: Comment.new, event_id: @event.id %>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :accept]
 
   # GET /users
   # GET /users.json
@@ -61,6 +61,18 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def accept
+    @event = Event.find_by_id(params[:event][:id])
+    if(!@user.accepted_events.map(&:id).include?(@event.id))
+      @user.invited_events.delete(@event)
+      @user.accepted_events << @event
+      flash[:notice] = "You are now attending #{@event.title}!"
+    else
+      flash[:alert] = "You are already attending #{@event.title}!"
+    end
+    render "show"
   end
 
   private

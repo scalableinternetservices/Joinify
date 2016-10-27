@@ -7,42 +7,23 @@
                              'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <!--[if lt IE 9]>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/htmlz5shiv/r29/html5.min.js">
   </script>
   <![endif]-->
   </head>
 
   <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <%= link_to "Joinify", 'events#index', id: "logo" %>
-        <nav>
-          <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Users",   'users#index' %></li>
-            <li><%= link_to "Events",   'events#index' %></li>
-            <li><%= link_to "Log in", '#' %></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <div class="container">
     <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
+      <p class="alert alert-success flash"><%= notice %></p>
     <% end %>
     <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
+      <p class="alert alert-danger flash"><%= alert %></p>
     <% end %>
+    <%= render "nav" %>
+
+    <div class="container">
 
     <p class="navbar-text pull-right">
-      <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-      <% else %>
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-      <% end %>
     </p>
 
     <%= yield %>

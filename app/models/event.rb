@@ -4,11 +4,18 @@ class Event < ApplicationRecord
   has_and_belongs_to_many :attendees, class_name: "User", :join_table => :attending
   belongs_to :owner, class_name: "User"
 
+
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "metallica.jpg"
+  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
+  has_many :comments, class_name: "Comment"
+
   validates :title, presence: true
   validate :validate_title_length
   validates :start_date, presence: true
   validate :validate_future
   validate :validate_decription_length
+
+  private
 
   def validate_title_length
   	if title.length > 50
@@ -26,7 +33,6 @@ class Event < ApplicationRecord
     if description.length > 255
       errors.add(:description, "The description can't be more than 255 characters long")
     end
-
   end
 
 end
