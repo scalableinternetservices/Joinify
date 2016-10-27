@@ -4,7 +4,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    events = Event.where(:is_public => true).to_a + current_user.invited_events + current_user.accepted_events || current_user.created_events.to_a
+    @events = events.sort {|a,b| b.attendees.count <=> a.attendees.count}
   end
 
   # GET /events/1
