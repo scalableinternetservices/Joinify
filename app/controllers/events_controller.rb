@@ -81,26 +81,18 @@ class EventsController < ApplicationController
 
   def invite
     @user = User.find_by_username(event_params[:invitees])
-    respond_to do |format|
-      format.js {
-        if @user
-          if(@event.is_public || @event.owner_id == current_user.id)
-            if(@event.invitees.map(&:id).include?(@user.id))
-              flash[:notice] = "#{@user.username} is already invited to this event!"
-            elsif(@event.attendees.map(&:id).include?(@user.id))
-              flash[:notice] = "#{@user.username} is already attending this event!"
-            else
-              @event.invitees << @user
-              flash[:notice] = "You invited #{@user.username} to your event!"
-            end
-          else
-            flash[:alert] = "You can't invite users to this event!"
-          end
-        else
-          flash[:alert] = "That user does not exist!"
-        end
-      }
+    @clique = Clique.find_by_name(event_params[:invitees])
+    # @clique = nil
+    if !@clique.nil?
+      @clique.users.each do |user|
+        invite_user(user, @event)
+      end
     end
+    invite_user(@user, @event)    
+    # respond_to do |format|
+    #   format.js {
+        
+    #   }
   end
 
   private
@@ -117,4 +109,24 @@ class EventsController < ApplicationController
     def invite_params
       params.permit(:invite_username)
     end
+
+    def invite_user(user, event)
+      if user
+        if(event.is_public || event.owner_id == current_user.id)
+          if(event.invitees.map(&:id).include?(user.id))
+            flash[:notice] = "#{user.username} is already invited to this event!"
+          elsif(event.attendees.map(&:id).include?(user.id))
+            flash[:notice] = "#{user.username} is already attending this event!"
+          else
+            event.invitees << user
+            flash[:notice] = "You invited #{user.username} to your event!"
+          end
+        else
+          flash[:alert] = "You can't invite users to this event!"
+        end
+      else
+        flash[:alert] = "That user does not exist!"
+      end
+    end
+
 end
