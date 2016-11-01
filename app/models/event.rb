@@ -15,6 +15,10 @@ class Event < ApplicationRecord
   validate :validate_future
   validate :validate_decription_length
 
+  def date
+    start_date.strftime("%A, %B %d at %l:%M %p")
+  end
+
   private
 
   def validate_title_length
