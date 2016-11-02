@@ -11,47 +11,42 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
+  <div class="col-xs-6">
+    <div class="form-group">
+      <%= f.label :title %>
+      <%= f.text_field :title, {:class =>"form-control"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :picture %>
+      <%= f.file_field :picture %>
+    </div>
+  
+    <%= f.hidden_field :latitude, {:class =>"form-control"} %>
+    <%= f.hidden_field :longitude, {:class =>"form-control"} %>
+
+    <div class="form-group">
+      <%= f.label :start_date %>
+      <%= f.datetime_select :start_date, {:class =>"form-control"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, :rows => 3, :class =>"form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :is_public %>
+      <%= f.check_box :is_public %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Create Event", {:class => "btn btn-primary"} %>
+      <%= link_to 'Back', events_path, {:class => "btn btn-default"} %>
+    </div>
   </div>
 
-  <div class="form-group field">
-    <%= f.label :picture %>
-    <%= f.file_field :picture, {:class =>"form-control"} %>
-  </div>
+  <div class="col-xs-6" id="map"></div>
 
-  <div class="field">
-    <%= f.label :latitude %>
-    <%= f.text_field :latitude %>
-  </div>
 
-  <div class="field">
-    <%= f.label :longitude %>
-    <%= f.text_field :longitude %>
-  </div>
-
-  <div class="field">
-    <%= f.label :start_date %>
-    <%= f.datetime_select :start_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= f.label :is_public %>
-    <%= f.check_box :is_public %>
-  </div>
-
-  <div class="field">
-    <%= f.label :media_path %>
-    <%= f.text_field :media_path %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
