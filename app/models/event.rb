@@ -19,6 +19,11 @@ class Event < ApplicationRecord
     start_date.strftime("%A, %B %d at %l:%M %p")
   end
 
+  def distance_to(location)
+    return 2**100 if (latitude.nil? || longitude.nil?)
+    Math.sqrt((latitude - location[:latitude])**2 + (longitude - location[:longitude])**2)
+  end
+
   private
 
   def validate_title_length
