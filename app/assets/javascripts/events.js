@@ -1,3 +1,4 @@
+
 function initMap() {
   var phelps = {lat: 34.416132699040645, lng: -119.84466075897217};
   $('#event_latitude').val(phelps.lat);

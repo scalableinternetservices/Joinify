@@ -23,7 +23,7 @@ class Event < ApplicationRecord
     return 2**100 if (latitude.nil? || longitude.nil?)
     Math.sqrt((latitude - location[:latitude])**2 + (longitude - location[:longitude])**2)
   end
-
+  
   private
 
   def validate_title_length
