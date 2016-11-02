@@ -5,7 +5,20 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     events = Event.where(:is_public => true).to_a + current_user.invited_events + current_user.accepted_events || current_user.created_events.to_a
-    @events = events.sort {|a,b| b.attendees.count <=> a.attendees.count}
+    if(params[:lat])
+      user_location = {
+        latitude: params[:lat].to_f,
+        longitude: params[:lng].to_f
+      }
+      
+      @events = events.sort{|a,b| a.distance_to(user_location) <=> b.distance_to(user_location)}
+    else
+      @events = events.sort {|a,b| b.attendees.count <=> a.attendees.count}
+    end
+    respond_to do |format|
+      format.html { render :index }
+      format.js { render @events }
+    end
   end
 
   # GET /events/1

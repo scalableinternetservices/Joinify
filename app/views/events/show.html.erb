@@ -17,7 +17,7 @@
 
 <p>
   <strong>Start date:</strong>
-  <%= @event.start_date %>
+  <%= @event.date %>
 </p>
 
 <p>
@@ -30,10 +30,6 @@
   <%= @event.is_public %>
 </p>
 
-<p>
-  <strong>Media path:</strong>
-  <%= @event.media_path %>
-</p>
 
 <%= form_for(@event, remote: true, :method => "put", :url => "/invite/#{@event.id}", :class => "input-group") do |f| %>
   <%= f.text_field :invitees, :class => "form-control", :placeholder => "Invite user by username", :value => "" %>

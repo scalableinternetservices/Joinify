@@ -1,44 +1,10 @@
-<h1>Events</h1>
+<div id="events-content">
+  <h1>Events</h1>
+  <%= link_to "Find nearest events!", events_path, :id => "location-button", :class => "btn btn-primary" %>
 
-<% @events.each do |event| %>
-  <div class="event thumbnail right-caption">
+  <%= render @events %>
+  
+  <br>
 
-    <div class="event-image">
-      <%= image_tag event.picture.url, :class => "img-rounded img-responsive" %>
-    </div>
-
-    <div class="event-title">
-      <p><%= event.title %></p>
-    </div>
-    
-    <div class="event-date">
-      <p><%= event.start_date %></p>
-    </div>
-
-    <div class="event-attendance">
-      <p><%= event.attendees.count %> people attending!</p>
-    </div>
-
-    <div class="event-desc caption">
-      <%= event.description %>
-    </div>
-
-    <% if event.is_public %>
-      <p>This event is public!</p>
-    <% else %>
-      <p>This event is private!</p>
-    <% end %>
-
-    <div class="button-group">
-      <%= link_to 'Show', event, :class => "btn btn-primary" %>
-      <% if event.owner_id == current_user.id %>
-        <%= link_to 'Edit', edit_event_path(event), :class => "btn btn-default" %>
-        <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
-<br>
-
-<%= link_to 'New Event', new_event_path, :class => "btn btn-primary" %>
+  <%= link_to 'New Event', new_event_path, :class => "btn btn-primary" %>
+</div>
