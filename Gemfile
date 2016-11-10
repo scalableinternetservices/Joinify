@@ -14,6 +14,7 @@ gem 'devise'
 gem 'google-webfonts-rails'
 gem 'paperclip', "~> 5.0.0"
 gem 'aws-sdk'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'byebug',  '9.0.0', platform: :mri

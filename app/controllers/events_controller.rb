@@ -4,13 +4,16 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    events = Event.where(:is_public => true).to_a + current_user.invited_events + current_user.accepted_events || current_user.created_events.to_a
+    events = Event.where(:is_public => true)
+              .paginate(:page => params[:page], :per_page => 10)
+              # .merge(current_user.invited_events)
+              # .merge(current_user.accepted_events)
+              # .merge(current_user.created_events)
     if(params[:lat])
       user_location = {
         latitude: params[:lat].to_f,
         longitude: params[:lng].to_f
       }
-      
       @events = events.sort{|a,b| a.distance_to(user_location) <=> b.distance_to(user_location)}
     else
       @events = events.sort {|a,b| b.attendees.count <=> a.attendees.count}
