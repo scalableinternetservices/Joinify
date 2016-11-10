@@ -20,4 +20,9 @@ class Plotter:
 		plt.axis(plot_info.get_axes())
 		plt.show()
 
+	def plot_all(self, plot_info_list, plots_list):
+		for i in range(len(plot_info_list)):
+			self.plot(plot_info_list[i], plots_list[i])
+
+
 	# def plot_all(self, )
