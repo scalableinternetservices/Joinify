@@ -1,13 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-
-# 1000.times do |i|
+# 100.times do |i|
   
 #   User.create(
 #     username: "user#{i}",
@@ -16,26 +7,77 @@
 #     email: "user#{i}@example.com"
 #   )
 
-#   Event.create(
+#   event = Event.new(
 #     title: "event#{i}",
-#     start_date: Time.now + i.days,
+#     start_date: Time.now + (i+1).days,
 #     description: "Description for event#{i}",
 #     is_public: (i % 2) == 1,
-#     owner_id: i
+#     owner_id: (i+1)
 #   )
+#   event.save!
 # end
 
-inserts = []
-1000.times do |i|
+user_inserts = []
+event_inserts = []
+comment_inserts = []
+
+user_count = 1000
+event_count = 10000
+comments_count = 50
+
+user_count.times do |i|
   password = "password#{i}"
   new_hashed_password = User.new(:password => password).encrypted_password
-  inserts.push "('user#{i}', 'user#{i}@example.com', '#{new_hashed_password}', '#{Time.now}', '#{Time.now}')"
+  user_inserts.push "('user#{i}', 'user#{i}@example.com', '#{new_hashed_password}', '#{Time.now}', '#{Time.now}')"
 end
-sql = %{
-INSERT INTO users 
-(username, email, encrypted_password, created_at, updated_at) 
-VALUES #{inserts.join(", ")}
+
+puts "Finished generating users"
+
+event_count.times do |i|
+  owner_id = rand(1..user_count)
+  event = %{
+    ('event#{i}', 
+    '#{Time.now + (i+1).days}', 
+    'Description for event#{i}', 
+    '#{(i % 2) == 1}', 
+    '#{owner_id}', 
+    '#{Time.now}', 
+    '#{Time.now}')
+  }.squish
+  event_inserts.push(event)
+  comments_count.times do |j|
+    comment = %{
+      ('comment#{j}', 
+      '#{owner_id}', 
+      '#{i+1}', 
+      '#{Time.now}', 
+      '#{Time.now}')
+    }.squish
+    comment_inserts.push(comment)
+  end
+end
+
+puts "Finished generating events and comments"
+
+users_sql = %{
+  INSERT INTO users 
+  (username, email, encrypted_password, created_at, updated_at) 
+  VALUES #{user_inserts.join(", ")}
 }.squish
 
-User.connection.execute sql
+events_sql = %{
+  INSERT INTO events 
+  (title, start_date, description, is_public, owner_id, created_at, updated_at) 
+  VALUES #{event_inserts.join(", ")}
+}
+
+comments_sql = %{
+  INSERT INTO comments 
+  (message, creator_id, event_id, created_at, updated_at) 
+  VALUES #{comment_inserts.join(", ")}
+}
+
+User.connection.execute users_sql
+Event.connection.execute events_sql
+Comment.connection.execute comments_sql
 
