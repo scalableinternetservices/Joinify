@@ -62,7 +62,7 @@
       </request>
     </session>
 
-    <session name="sign-in-create event" probability="100" type="ts_http">
+    <session name="sign-in-create event" probability="0" type="ts_http">
 
       <request>
         <http url="/" version="1.1" method="GET"/>
@@ -101,15 +101,13 @@
       </request>
     </session>
 
-    <session name="comment" probability="0" type="ts_http">
+    <session name="comment" probability="100" type="ts_http">
 
       <request>
         <http url="/" version="1.1" method="GET"/>
       </request>
 
-      <request>
-        <http url="/users/sign_in" version="1.1" method="GET"/>
-      </request>
+      <thinktime min="5" max="8" random="true"></thinktime>
 
       <setdynvars sourcetype="random_number" start="1" end="999">
          <var name="rndint"/>
@@ -119,21 +117,33 @@
         <http url="/users/sign_in" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=EonsovXwcgpXkVPeqR1BamlwMQutj6mStYPMZ4cwdb1EuhGDraDceM68CME1NgSF6CT5AwhIwVD%2BtKF6ZhQGMg%3D%3D&amp;user%5Bemail%5D=user%%_rndint%%%40example.com&amp;user%5Bpassword%5D=password%%_rndint%%&amp;user%5Bremember_me%5D=0&amp;commit=Log+in" method="POST"/>
       </request>
 
-       <request>
-        <http url="/events" version="1.1" method="GET"/>
-      </request>
-
-      <setdynvars sourcetype="random_number" start="1" end="50">
-         <var name="secondrndint"/>
+      <setdynvars sourcetype="random_number" start="1" end="30">
+         <var name="number_of_events_to_visit"/>
       </setdynvars>
 
-      <setdynvars sourcetype="random_string" length="10">
+      <for from="1" to="%%_number_of_events_to_visit%%" incr="1" var="counter">
+
+        <thinktime min="1" max="10" random="true"></thinktime>
+
+        <setdynvars sourcetype="random_number" start="1" end="10000">
+          <var name="event_to_visit"/>
+        </setdynvars>
+
+        <setdynvars sourcetype="random_string" length="10">
           <var name="rand_string"/>
-      </setdynvars>
+        </setdynvars>
 
-      <request subst="true">
-        <http url="/events/%%_secondrndint%%" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=l5ok9G5O3zVYdNW82gYfpFkgzQDIzNCtnYLIgO%2F2nx8n8uWRUNpwsqjCsvuWhRuNLrhKTEbkKTA82TCkvpNOzw%3D%3D&amp;comment%5Bmessage%5D=%%_rand_string%%%21&amp;commit=Create+Comment" method="POST"/>
-      </request>
+        <request>
+          <http url="/events/%%_event_to_visit%%" version="1.1" method="GET"/>
+        </request>
+
+        <thinktime min="10" max="20" random="true"></thinktime>
+
+        <request subst="true">
+          <http url="/events/%%_event_to_visit%%" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=l5ok9G5O3zVYdNW82gYfpFkgzQDIzNCtnYLIgO%2F2nx8n8uWRUNpwsqjCsvuWhRuNLrhKTEbkKTA82TCkvpNOzw%3D%3D&amp;comment%5Bmessage%5D=%%_rand_string%%%21&amp;commit=Create+Comment" method="POST"/>
+        </request>
+
+      </for>
     </session>
 
     <session name="invite-user" probability="0" type="ts_http">
