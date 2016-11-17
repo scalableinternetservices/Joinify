@@ -28,9 +28,11 @@
 
 user_inserts = []
 event_inserts = []
+comment_inserts = []
 
 user_count = 1000
 event_count = 10000
+comments_count = 50
 
 user_count.times do |i|
   password = "password#{i}"
@@ -51,6 +53,16 @@ event_count.times do |i|
   }.squish
   puts event
   event_inserts.push(event)
+  comments_count.times do |j|
+    comment = %{
+      ('comment#{j}', 
+      '#{owner_id}', 
+      '#{i+1}', 
+      '#{Time.now}', 
+      '#{Time.now}')
+    }.squish
+    comment_inserts.push(comment)
+  end
 end
 
 users_sql = %{
@@ -61,10 +73,17 @@ users_sql = %{
 
 events_sql = %{
   INSERT INTO events 
-  (title, start_date, description, is_public, owner_id, created_at, updated_at)
+  (title, start_date, description, is_public, owner_id, created_at, updated_at) 
   VALUES #{event_inserts.join(", ")}
+}
+
+comments_sql = %{
+  INSERT INTO comments 
+  (message, creator_id, event_id, created_at, updated_at) 
+  VALUES #{comment_inserts.join(", ")}
 }
 
 User.connection.execute users_sql
 Event.connection.execute events_sql
+Comment.connection.execute comments_sql
 
