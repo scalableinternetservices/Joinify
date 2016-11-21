@@ -21,13 +21,14 @@ user_inserts = []
 event_inserts = []
 comment_inserts = []
 
-user_count = 1000
+user_count = 10000
 event_count = 10000
 comments_count = 50
 
 user_count.times do |i|
-  password = "password#{i}"
-  new_hashed_password = User.new(:password => password).encrypted_password
+  # password = "password#{i}"
+  new_hashed_password = "$2a$11$R0z/mtKxc.uxZM2VpReO/.ofYABF4INX6OIq1ExHPMgu3D5gJQAh6"
+  # new_hashed_password = User.new(:password => password).encrypted_password
   user_inserts.push "('user#{i}', 'user#{i}@example.com', '#{new_hashed_password}', '#{Time.now}', '#{Time.now}')"
 end
 
