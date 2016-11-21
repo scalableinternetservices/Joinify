@@ -1,10 +1,12 @@
-<div id="events-content">
-  <h1>Events</h1>
-  <%= link_to "Find nearest events!", events_path, :id => "location-button", :class => "btn btn-primary" %>
+<% cache(cache_key_for_events_table) do %>
+  <div id="events-content">
+    <h1>Events</h1>
+    <%= link_to "Find nearest events!", events_path, :id => "location-button", :class => "btn btn-primary" %>
 
-  <%= render @events %>
-  
-  <br>
+    <%= render partial: 'events/event', collection: @events, cached: true %>
+    
+    <br>
 
-  <%= link_to 'New Event', new_event_path, :class => "btn btn-primary" %>
-</div>
+    <%= link_to 'New Event', new_event_path, :class => "btn btn-primary" %>
+  </div>
+<% end %>

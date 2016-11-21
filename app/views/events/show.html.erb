@@ -39,7 +39,7 @@
 <% end %>
 
 <h3 class="text-center">Comments</h3>
-<%= render @comments %>
+<%= render partial: "comments/comment", collection: @comments, cached: true %>
 
 <%= render 'comments/form', comment: Comment.new, event_id: @event.id %>
 

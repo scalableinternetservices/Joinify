@@ -16,13 +16,14 @@ scp -i ../joinify.pem joinify.xml ec2-user@35.163.158.68:~
 tsung -f joinify.xml -k start
 
 # Rsync command to save tsung logs
-rsync -auve 'ssh -i joinify.pem' ec2-user@35.163.158.68:.tsung/log/ .
+rsync -auve 'ssh -i joinify.pem' ec2-user@35.163.178.38:.tsung/log/ .
 
+ssh -i joinify.pem ec2-user@35.163.178.38
 # Delete all event rows
 Event.destroy_all
 
 # Reset unique id for events table
-ActiveRecord::Base.connection.reset_pk_sequence!('events')
+ActiveRecord::Base.connection.reset_pk_sequence!('comments')
 
 1) single app server no load balancer
 2) 4 app servers
@@ -33,3 +34,15 @@ Optomization
 1) single app server no load balancer
 2) 4 app servers
 3) 8 app servers
+
+DB - aash5xdbmzx4fw
+
+n = Comment.count
+(500001..n).each do |id|
+  Comment.find_by_id(id).try(:destroy)
+end
+
+n = Comment.count
+n.downto(500001).each do |id|
+  Comment.find_by_id(id).try(:destroy)
+end
