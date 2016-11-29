@@ -7,7 +7,7 @@
   </clients>
 
   <servers>
-    <server host="joinify-demo.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+    <server host="joinify-lb.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
 
   <load>
@@ -108,7 +108,7 @@
 
       <thinktime min="5" max="8" random="true"></thinktime>
 
-      <setdynvars sourcetype="random_number" start="1" end="9999">
+      <setdynvars sourcetype="random_number" start="1" end="999">
          <var name="rndint"/>
       </setdynvars>
 

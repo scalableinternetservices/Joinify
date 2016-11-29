@@ -1,8 +1,8 @@
 # Single deployment
 eb create -db.engine postgres -db.i db.t2.micro -db.user joinify-user --envvars SECRET_KEY_BASE=shDFG23JHK --single joinify-demo
 
-# Deployment with load balancer
-eb create -db.engine postgres -db.i db.m3.medium -db.user joinifyuser --envvars SECRET_KEY_BASE=shDFG23JHK -i m3.medium joinify-lb
+# Deployment with load balancer -- m4.2xlarge DB + c3.large appserver
+eb create -db.engine postgres -db.i db.m4.2xlarge -db.user joinifyuser --envvars SECRET_KEY_BASE=shDFG23JHK -i c3.large joinify-lb
 
 db password: blahblah
 
@@ -13,10 +13,10 @@ https://cs291.s3.amazonaws.com/Tsung.json
 scp -i ../joinify.pem joinify.xml ec2-user@35.163.158.68:~
 
 # Run tsung test
-tsung -f joinify.xml -k start
+tsung -f joinify10x.xml -k start
 
 # Rsync command to save tsung logs
-rsync -auve 'ssh -i joinify.pem' ec2-user@35.163.158.68:.tsung/log/ .
+rsync -auve 'ssh -i joinify.pem' ec2-user@35.164.176.174:.tsung/log/ .
 
 # Delete all event rows
 Event.destroy_all
