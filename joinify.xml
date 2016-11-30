@@ -131,7 +131,7 @@
           <var name="rand_string"/>
         </setdynvars>
 
-        <request>
+        <request subst="true">
           <http url="/events/%%_event_to_visit%%" version="1.1" method="GET"/>
         </request>
 
