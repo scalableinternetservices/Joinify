@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     )
     @comment.save
     @comments = @event.comments
-    redirect_to events_path(@event)
+    redirect_to event_path(@event)
   end
 
   def destroy
