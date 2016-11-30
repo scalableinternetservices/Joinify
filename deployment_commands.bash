@@ -1,7 +1,8 @@
 # Single deployment
 eb create -db.engine postgres -db.i db.t2.micro -db.user joinify-user --envvars SECRET_KEY_BASE=shDFG23JHK --single joinify-demo
 
-# Deployment with load balancer
+# Deployment with load balancer -- m4.2xlarge DB + c3.large appserver
+
 eb create -db.engine postgres -db.i db.m4.2xlarge -db.user joinifyuser --envvars SECRET_KEY_BASE=shDFG23JHK -i c3.large joinify-lb
 
 db password: blahblah
