@@ -23,7 +23,7 @@ comment_inserts = []
 
 user_count = 1000
 event_count = 10000
-comments_count = 50
+comments_count = 1000
 
 user_count.times do |i|
   # password = "password#{i}"
