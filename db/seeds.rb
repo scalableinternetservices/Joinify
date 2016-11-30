@@ -21,7 +21,7 @@ user_inserts = []
 event_inserts = []
 comment_inserts = []
 
-user_count = 10000
+user_count = 1000
 event_count = 10000
 comments_count = 50
 
