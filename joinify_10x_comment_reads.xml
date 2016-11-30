@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="30000"/>
+  </clients>
+
+  <servers>
+    <server host="joinify-lb.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="20" unit="second">
+      <users arrivalrate="20" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="2" duration="20" unit="second">
+      <users arrivalrate="40" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="20" unit="second">
+      <users arrivalrate="60" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="20" unit="second">
+      <users arrivalrate="80" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="20" unit="second">
+      <users arrivalrate="100" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="6" duration="20" unit="second">
+      <users arrivalrate="120" unit="second"/>
+    </arrivalphase>
+ </load>
+
+  <options>
+    <option name="global_ack_timeout" value="2000"/>
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/$
+      </user_agent>
+    </option>
+  </options>
+
+
+  <sessions>
+
+    <session name="sign-up" probability="0" type="ts_http">
+
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <request>
+        <http url="/users/sign_up" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="random_string" length="10">
+          <var name="username"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/users" version="1.1" contents="utf8=%E2%9C%93&amp;user%5Busername%5D=%%_username%%&amp;user%5Bemail%5D=%%_username%%%40gmail.com&amp;user%5Bpassword%5D=%%_username%%&amp;user%5Bpassword_confirmation%5D=%%_username%%&amp;commit=Sign+upName" method="POST"/>
+      </request>
+    </session>
+
+    <session name="sign-in-create event" probability="0" type="ts_http">
+
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <request>
+        <http url="/users/sign_in" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="random_number" start="1" end="999">
+         <var name="rndint"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/users/sign_in" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=EonsovXwcgpXkVPeqR1BamlwMQutj6mStYPMZ4cwdb1EuhGDraDceM68CME1NgSF6CT5AwhIwVD%2BtKF6ZhQGMg%3D%3D&amp;user%5Bemail%5D=user%%_rndint%%%40example.com&amp;user%5Bpassword%5D=password%%_rndint%%&amp;user%5Bremember_me%5D=0&amp;commit=Log+in" method="POST"/>
+      </request>
+
+      <request>
+        <http url="/events" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="random_string" length="10">
+          <var name="event_name"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="random_number" start="0" end="90">
+          <var name="latitude"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="random_number" start="0" end="180">
+          <var name="longitude"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/events" version="1.1" contents="utf8=%E2%9C%93&amp;event%5Btitle%5D=%%_event_name%%&amp;event%5Blatitude%5D=%%_latitude%%&amp;event%5Blongitude%5D=%%_longitude%%&amp;event%5Bstart_date%281i%29%5D=2017&amp;event%5Bstart_date%282i%29%5D=11&amp;event%5Bstart_date%283i%29%5D=9&amp;event%5Bstart_date%284i%29%5D=00&amp;event%5Bstart_date%285i%29%5D=17&amp;event%5Bdescription%5D=asdasdasd&amp;event%5Bis_public%5D=1" method="POST"/>
+      </request>
+    </session>
+
+    <session name="comment" probability="100" type="ts_http">
+
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime min="5" max="8" random="true"></thinktime>
+
+      <setdynvars sourcetype="random_number" start="1" end="9999">
+         <var name="rndint"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/users/sign_in" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=EonsovXwcgpXkVPeqR1BamlwMQutj6mStYPMZ4cwdb1EuhGDraDceM68CME1NgSF6CT5AwhIwVD%2BtKF6ZhQGMg%3D%3D&amp;user%5Bemail%5D=user%%_rndint%%%40example.com&amp;user%5Bpassword%5D=password0&amp;user%5Bremember_me%5D=0&amp;commit=Log+in" method="POST"/>
+      </request>
+
+      <setdynvars sourcetype="random_number" start="1" end="30">
+         <var name="number_of_events_to_visit"/>
+      </setdynvars>
+
+      <for from="1" to="%%_number_of_events_to_visit%%" incr="1" var="counter">
+
+        <thinktime min="1" max="10" random="true"></thinktime>
+
+        <setdynvars sourcetype="random_number" start="1" end="10">
+          <var name="event_to_visit"/>
+        </setdynvars>
+
+        <setdynvars sourcetype="random_string" length="10">
+          <var name="rand_string"/>
+        </setdynvars>
+
+        <request>
+          <http url="/events/%%_event_to_visit%%" version="1.1" method="GET"/>
+        </request>
+
+        <thinktime min="10" max="20" random="true"></thinktime>
+
+        <if var="number_of_events_to_visit" gt="20">
+          <request subst="true">
+            <http url="/events/%%_event_to_visit%%" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=l5ok9G5O3zVYdNW82gYfpFkgzQDIzNCtnYLIgO%2F2nx8n8uWRUNpwsqjCsvuWhRuNLrhKTEbkKTA82TCkvpNOzw%3D%3D&amp;comment%5Bmessage%5D=%%_rand_string%%%21&amp;commit=Create+Comment" method="POST"/>
+          </request>
+        </if>
+
+      </for>
+    </session>
+
+    <session name="invite-user" probability="0" type="ts_http">
+
+      <request>
+          <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <request>
+        <http url="/users/sign_in" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="random_number" start="1" end="999">
+         <var name="rndint"/>
+      </setdynvars> 
+
+      <request subst="true">
+        <http url="/users/sign_in" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=EonsovXwcgpXkVPeqR1BamlwMQutj6mStYPMZ4cwdb1EuhGDraDceM68CME1NgSF6CT5AwhIwVD%2BtKF6ZhQGMg%3D%3D&amp;user%5Bemail%5D=user%%_rndint%%%40example.com&amp;user%5Bpassword%5D=password%%_rndint%%&amp;user%5Bremember_me%5D=0&amp;commit=Log+in" method="POST"/>
+      </request>
+
+      <request>
+        <http url="/events" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="random_number" start="53" end="54">
+         <var name="secondrndint"/>
+      </setdynvars>
+
+      <request>
+        <http url="/events/%%_secondrndint%%" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="random_number" start="1" end="999">
+         <var name="random_user_to_invite_number"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/invite/%%__secondrndint%%" version="1.1" contents="utf8=%E2%9C%93&amp;_method=put&amp;event%5Binvitees%5D=user%%_random_user_to_invite_number%%&amp;commit=Update+Event" method="POST"/>
+      </request>
+    </session>
+
+  </sessions>
+</tsung>
