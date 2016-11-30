@@ -7,7 +7,7 @@
   </clients>
 
   <servers>
-    <server host="joinify-lb.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+    <server host="joinify-lb2.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
 
   <load>

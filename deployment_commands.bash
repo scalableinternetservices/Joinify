@@ -11,17 +11,20 @@ db password: blahblah
 https://cs291.s3.amazonaws.com/Tsung.json
 
 # Copy tsung xml file to tsung server
-scp -i ../joinify.pem joinify.xml ec2-user@35.160.127.183:~
+scp -i ../joinify.pem joinify.xml ec2-user@35.164.109.189:~
 
 # Run tsung test
 tsung -f joinify_10x.xml -k start
 
 # Rsync command to save tsung logs
-rsync -auve 'ssh -i joinify.pem' ec2-user@35.160.127.183:.tsung/log/ .
+rsync -auve 'ssh -i joinify.pem' ec2-user@35.164.109.189:.tsung/log/ .
 
-ssh -i joinify.pem ec2-user@35.160.127.183
+ssh -i joinify.pem ec2-user@35.164.109.189
 # Delete all event rows
 Event.destroy_all
+
+# Tsung template link
+https://cs291.s3.amazonaws.com/Tsung.json
 
 # Reset unique id for events table
 ActiveRecord::Base.connection.reset_pk_sequence!('comments')
