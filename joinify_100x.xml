@@ -3,9 +3,10 @@
 <tsung loglevel="notice" version="1.0">
 
   <clients>
-    <client host="localhost" use_controller_vm="false" maxusers="30000"/>
-    <client host="35.160.215.21" use_controller_vm="false" maxusers="30000"/>
-    <client host="35.163.194.252" use_controller_vm="false" maxusers="30000"/>
+    <client host="host1" use_controller_vm="false" maxusers="25000"/>
+    <client host="host2" use_controller_vm="false" maxusers="25000"/>
+   <!--  <client host="host3" use_controller_vm="false" maxusers="25000"/>
+    <client host="host4" use_controller_vm="false" maxusers="25000"/> -->
   </clients>
 
   <servers>
@@ -143,7 +144,9 @@
         <request subst="true">
           <http url="/events/%%_event_to_visit%%" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=l5ok9G5O3zVYdNW82gYfpFkgzQDIzNCtnYLIgO%2F2nx8n8uWRUNpwsqjCsvuWhRuNLrhKTEbkKTA82TCkvpNOzw%3D%3D&amp;comment%5Bmessage%5D=%%_rand_string%%%21&amp;commit=Create+Comment" method="POST"/>
         </request>
-
+        <request>
+          <http url="/events" version="1.1" method="GET"/>
+        </request>
       </for>
     </session>
 
