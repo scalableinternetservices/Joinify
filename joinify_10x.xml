@@ -7,7 +7,7 @@
   </clients>
 
   <servers>
-    <server host="joinify-lb2.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+    <server host="joinify-lb.sypqpxru3e.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
 
   <load>
@@ -132,17 +132,17 @@
           <var name="rand_string"/>
         </setdynvars>
 
-        <request subst="true">
+<!--         <request subst="true">
           <http url="/events/%%_event_to_visit%%" version="1.1" method="GET"/>
-        </request>
+        </request> -->
 
         <thinktime min="10" max="20" random="true"></thinktime>
 
-        <if var="number_of_events_to_visit" gt="20">
+        <!-- <if var="number_of_events_to_visit" gt="20"> -->
           <request subst="true">
             <http url="/events/%%_event_to_visit%%" version="1.1" contents="utf8=%E2%9C%93&amp;authenticity_token=l5ok9G5O3zVYdNW82gYfpFkgzQDIzNCtnYLIgO%2F2nx8n8uWRUNpwsqjCsvuWhRuNLrhKTEbkKTA82TCkvpNOzw%3D%3D&amp;comment%5Bmessage%5D=%%_rand_string%%%21&amp;commit=Create+Comment" method="POST"/>
           </request>
-        </if>
+        <!-- </if> -->
 
       </for>
     </session>
